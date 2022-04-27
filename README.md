@@ -21,6 +21,8 @@ Based on the histograms of UMIs/droplet, we suspect there is likely ambient RNA 
 
 ## Subclustering and annotation of scATAC data
 
+## Can you identify more cell types in the colon with multimodaliy data?
+
 ## Data integration
 
 ## Regulatory TF analysis
