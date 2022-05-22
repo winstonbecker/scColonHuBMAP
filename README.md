@@ -58,7 +58,7 @@ Keep only the ATAC cells that we kept the corresponding RNA cells fror the multi
 Others have reported that in specific cases multimodal date can enable the elucidation of additional cell states. Following our initial clustering and annotation of the data based ont eh single-ome data, we also attempted...
 
 ## Data integration
-CCA vs dictionary based method
+CCA vs dictionary based method. And if dictionary do you map to the same sample as the references using the entire multiome set as a bridge. Probably best to do by compartment based on what we saw for encode, which may be easier anyway. 
 
 ## Regulatory TF analysis
 
