@@ -50,11 +50,15 @@ After initially annotating enteroendocrine cells in each compartment, we next an
 
 ## Initial Clustering of scATAC data  
 
+Keep only the ATAC cells that we kept the corresponding RNA cells fror the multiome data. Then question is do we cluster everything together or do it seperately. If seperate then we can go ahead and do it, before we have the final list of multiome cells. 
+
 ## Subclustering and annotation of scATAC data
 
 ## Can you identify more cell types in the colon with multimodaliy data?
+Others have reported that in specific cases multimodal date can enable the elucidation of additional cell states. Following our initial clustering and annotation of the data based ont eh single-ome data, we also attempted...
 
 ## Data integration
+CCA vs dictionary based method
 
 ## Regulatory TF analysis
 
