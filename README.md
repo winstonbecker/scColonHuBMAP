@@ -4,20 +4,24 @@ Code for snATAC and snRNA analysis in High Resolution Single Cell Maps Reveals D
 by [Hickey*, Becker*, and Nevins* et al](https://www.biorxiv.org/content/10.1101/2021.11.25.469203v1). This github wiki readme and the corresponding code will walk through the analysis done on the intestine data collected in this paper. 
 
 ## Description of dataset and data availability  
-This dataset consists of data from 8 regions of the intestine (Duodenum, Proximal-jejunum, Mid-jejunum, Ileum, Ascending Colon, Transverse Colon, Descending Colon, and Sigmoid Colon) from 9 donors (B001, B004, B005, B006, B008, B009, B010, B011, and B012). Matched scATAC and snRNA data were colected from 3 of these donors (B001, B004, and B005) and multiome data (scATAC and scRNA in the same cell) was collected from the remaining 6 donors. The data can be obtained from the HuBMAP data portal and will be made available on dbGaP. Processed data files including expression matricies will be linked to on this page.  
+This dataset consists of data from 8 regions of the intestine (Duodenum, Proximal-jejunum, Mid-jejunum, Ileum, Ascending Colon, Transverse Colon, Descending Colon, and Sigmoid Colon) from 9 donors (B001, B004, B005, B006, B008, B009, B010, B011, and B012). Matched scATAC and snRNA data were colected from 3 of these donors (B001, B004, and B005) and multiome data (scATAC and scRNA in the same cell) was collected from the remaining 6 donors. The data can be obtained from the HuBMAP data portal and will be made available on dbGaP. Links for processed data files including expression matricies will included on this page.  
 
 ## Quality Control and Filtering 
-The first step in analyzing this data was quality control and filtering. For the scATAC data, cells were filtered based on TSS enrichment and number of fragments/droplet. We set a TSS enrichment cutoff of 5 for all samples, and set specific cutoffs for the minimum number of fragments per droplet for each sample due to different sequencing depth in different samples. Different cutoffs were maually determined to isolate a population of cells. Following filtering based on these QC metrics we simulated scATAC doubles using ArchR and removed predicted doublets from the dataset. This analysis is done in the script 1_scATAC_initial_QC_and_filtering.R.  
+The first step in analyzing this data was quality control and filtering. For the scATAC data, cells were filtered based on TSS enrichment and number of fragments/droplet. We set a TSS enrichment cutoff of 5 for all samples, and set specific cutoffs for the minimum number of fragments per droplet for each sample due to different sequencing depth in different samples. Different cutoffs were maually determined to isolate a population of cells. Following filtering based on these QC metrics we simulated scATAC doublets using ArchR and removed predicted doublets from the dataset. This analysis is done in the script 1_scATAC_initial_QC_and_filtering.R.  
 
-For the snRNA data, we started by first filtering out multiome cells that did not meet the scATAC QC cutoffs. We next filtered cells to have a minimum of 400 unique genes/droplet. We also removed cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets," as shown in the example below: 
+For the snRNA data, we started by first filtering out multiome cells that did not meet the scATAC QC cutoffs. We next filtered all cells to have a minimum of 400 unique genes/droplet. We also removed cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets." For example, prior to any filtering the distribution of UMI across all droplets might look something like this:  
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/15204322/169681077-2865fc5b-1dfd-45bd-99a9-b9074376f07b.png" width="300" height="250">  
+</p> 
+Where the peak around 250 UMIs/cell would represent counts in empty droplets and the peak around 2K UMIs would like represent counts in cells. In this case we set the minimum number of UMIs to be at least 3x the median number of UMIs in "empty droplets" to minimize ambient RNA contamination, resulting in the following droplets remaining after filtering:  
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/15204322/169681092-801c2de5-d0a2-44f1-bc9b-3845aa1e8032.png" width="300" height="250"> 
+</p> 
 
-Prefilter Example:  
-![image](https://user-images.githubusercontent.com/15204322/169681077-2865fc5b-1dfd-45bd-99a9-b9074376f07b.png)  
+Next we simulated potential doublets for the non-multiome samples using [DoubletFinder](https://github.com/chris-mcginnis-ucsf/DoubletFinder) and removed predicted doublets from the datasets.  
 
-Postfilter Example:  
-![image](https://user-images.githubusercontent.com/15204322/169681092-801c2de5-d0a2-44f1-bc9b-3845aa1e8032.png)  
-
-Next we simulated doublets for the non-multiome samples and removed predicted doublets from the datasets. Based on the histograms of UMIs/droplet, we suspect that like most droplet based scRNA datasets there is likely some ambient RNA contamination in the dataset. Given that removing ambient RNA can be difficult, we approached this in multiple ways, and completed many of our analyses in parallel considered different methods to control for ambient RNA. First we removed cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets." Next we ran multiple ambient RNA detection methods, including decontX and soupX. For SoupX, we campared the results of using the automated contamination estimation for each individual sample and setting the contmination to 20%, 30%, and 40%. The clustering and annotation of the dataset was largely unaffected by ambient RNA removal, and differential genes were computed both pre and post correction to confirm stability of results.  
+## Ambient RNA Correction
+Based on the histograms of UMIs/droplet, we suspect that, like most droplet based scRNA datasets, there is likely some ambient RNA contamination in the dataset. Given that removing ambient RNA can be difficult, we approached this in multiple ways, and completed many of our analyses in parallel while utilizing different methods to control for ambient RNA. As outlined above the first step was to simply remove cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets." Next we ran multiple ambient RNA detection methods, including [DecontX](https://github.com/campbio/celda) and [SoupX](https://github.com/constantAmateur/SoupX). For SoupX, we campared the results of using the automated contamination estimation for each individual sample and setting the contmination to 20%, 30%, and 40%.
 
 Example (B010-A-405) of soupX correction of MUC2 expression in immune cells (Corrected Raw counts are on the y-axis with raw counts on the x axis. The far left plot is the automated estimate of contamination and the other plots show 20%, 30%, and 40% contaminaiton, increasing from left to right. Points are colored by cell type):  
 <img src="https://user-images.githubusercontent.com/15204322/169681217-7b7232cf-917d-4d6e-970f-8172a524af29.png" width="235" height="200">
@@ -28,6 +32,7 @@ Example (B010-A-405) of soupX correction of MUC2 expression in immune cells (Cor
 Reassuringly, even when setting the contamination fraction to 40%, known marker genes are not typically removed, as shown here for PAX5 at 40% contamination (red represents B cells and Pink represents Plasma cells).
 ![image](https://user-images.githubusercontent.com/15204322/169681280-cc2193dd-6a9e-4b31-9848-41eb2b60aadc.png)
 
+The clustering and annotation of the dataset was largely unaffected by ambient RNA removal, and differential genes were computed both pre and post correction to confirm stability of results. For example, when we compare the results of immune cell annotated using the raw counts and decontx corrected counts, we observe a high degree of concordance between the annotations. 
 
 
 ## Initial Clustering of scRNA data
