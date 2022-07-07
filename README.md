@@ -66,6 +66,12 @@ Others have reported that in specific cases multimodal date can enable the eluci
 CCA vs dictionary based method. And if dictionary do you map to the same sample as the references using the entire multiome set as a bridge. Probably best to do by compartment based on what we saw for encode, which may be easier anyway. 
 
 ## Regulatory TF analysis
+We next aimed to identify regulatory TFs for each cell type in each region of the intestine, which is done in the script scATAC_5a_RegulatorsAllRegions.R.  
+
+For the epithelial comparment, we first identified TF regulators individually for each major region of the intestine (duodenum, jejunum, ileum, and colon) as outlined in the [ArchR manual](https://www.archrproject.com/bookdown/identification-of-positive-tf-regulators.html). In this case, we correlated the Gene Expression Matix with the Vierstra Motif Matrix. TF regulators were selected as those with a correlation between these two matricies of 0.5 and a adjusted pvalue of the correlation of less than 0.01 and a motif delta above the 75th percentile. We then included TFs that were regulators in any of the four regions as the final list of TF regulators. We then plot the row z-scores of the Gene expression matrix for the corresponding TFs and the row z-scores of the chrom var deviation z-score for each TF. 
+
+For the immune and stromal compartments, we identified TF regulators once for all sections rather than individually for each section.  
+
 
 ## Trajectory analysis
 
