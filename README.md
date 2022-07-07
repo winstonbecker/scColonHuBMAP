@@ -29,8 +29,10 @@ Example (B010-A-405) of soupX correction of MUC2 expression in immune cells (Cor
 <img src="https://user-images.githubusercontent.com/15204322/169681246-543f5805-4cb8-4c5d-a708-772365262598.png" width="235" height="200">
 <img src="https://user-images.githubusercontent.com/15204322/169681249-b6868b28-341e-4478-8508-7832b1ff14e1.png" width="235" height="200">
 
-Reassuringly, even when setting the contamination fraction to 40%, known marker genes are not typically removed, as shown here for PAX5 at 40% contamination (red represents B cells and Pink represents Plasma cells).
-![image](https://user-images.githubusercontent.com/15204322/169681280-cc2193dd-6a9e-4b31-9848-41eb2b60aadc.png)
+Reassuringly, even when setting the contamination fraction to 40%, known marker genes are not typically removed, as shown here for PAX5 at 40% contamination (red represents B cells and Pink represents Plasma cells).  
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/15204322/169681280-cc2193dd-6a9e-4b31-9848-41eb2b60aadc.png" width="300" height="250">
+</p> 
 
 The clustering and annotation of the dataset was largely unaffected by ambient RNA removal, and differential genes were computed both pre and post correction to confirm stability of results. For example, when we compare the results of immune cell annotated using the raw counts and decontx corrected counts, we observe a high degree of concordance between the annotations. 
 
