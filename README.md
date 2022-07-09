@@ -36,18 +36,22 @@ Reassuringly, even when setting the contamination fraction to 40%, known marker 
 
 The clustering and annotation of the dataset was largely unaffected by ambient RNA removal, and differential genes were computed both pre and post correction to confirm stability of results. For example, when we compare the results of immune cell annotated using the raw counts and decontx corrected counts, we observe a high degree of concordance between the annotations. 
 
+Based on these initial results, we used the decontx corrected counts for downstream clustering and annotation of the dataset. 
+
 
 ## Initial Clustering of scRNA data
-We first aimed to identify cells belonging to the immune, stromal, and epithelial compartments. For this first step, we utilized the standard seurat [normalize and scale pipeline](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and then corrected batch effects between donors using [Harmony](https://github.com/immunogenomics/harmony). We clustered the harmony corrected matricies and assigned each clusted as immune, stromal, or epithelial based on the expression of marker genes.  
+We first aimed to identify cells belonging to the immune, stromal, and epithelial compartments (see 2_rna_analysis_initial_clustering.R). For this first step, we utilized the standard seurat [normalize and scale pipeline](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and then corrected batch effects between donors using [Harmony](https://github.com/immunogenomics/harmony). We clustered the harmony corrected matricies and assigned each cluster as immune, stromal, or epithelial based on the expression of marker genes.  
 
 ## Subclustering and annotation of scRNA data
 ### Immune  
-Next we subclustered and annotated the immune RNA cells.  
+Next we subclustered and annotated the immune RNA cells. For the immune cells, we again ran the seurat standard normalize and scale approach and then ran Harmony to account for batch effects. For initial cell annotation, we leveraged labeling the cells with SingleR, labeling the cells with previously published scRNA datasets, comparing markers for each cluster to previously published colon marker sets, examining conanonical marker genes, and labeling the cells with azimuth. In general, all of these approaches gave similar results and we considered all the results wehen assigning the final cluster identites. Notably, following initial clustering there were a few clusters with RNA expression not consistant with them being immune cells, that may represent doublets. We sorted these cells into possible epithelial and possible stromal groups and saved them for downstream analysis with those compartments.  
 
 ### Stromal  
-We then subclustered and annotated the stromal RNA cells.
+We then subclustered and annotated the stromal RNA cells following a similar strategy, again using thestandard seurat normalize and sclae approach and then running Harmony for batch correction. Similarly, we removed possibly doublet clusters, and for those expressing epithelial markers saved them for downstream clustering with the epithelial datasets.  
 
 ### Epithelial  
+For the epithelial compartment, we started with all cells that were initially designated as epithelial cells as well as cells expressing epithelail markers when we analyzed the stromal and immune compartments. We divided these cells based on whether they were dervied from the duodenum, jejunum, ileum, and colon, and annotated each location seperately. For annotating all of these regions, we took a different approach from the immune and stromal compartments, this time running scTransform on each individual sample and then integrating the individual samples using the seurat functions FindIntegrationAnchors and IntegrateData. 
+
 #### Duodenum  
 #### Jejunum  
 #### Ileum  
