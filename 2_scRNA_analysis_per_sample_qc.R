@@ -2,7 +2,7 @@
 # WRB 2022
 
 # Import libraries
-.libPaths("/oak/stanford/groups/wjg/wbecker/libraries/R_LIBS_4p1p2/")
+.libPaths("./libraries/R_LIBS_4p1p2/")
 library(ArchR)
 library(Seurat)
 library(BSgenome.Hsapiens.UCSC.hg38)
@@ -19,17 +19,15 @@ library(DoubletFinder)
 set.seed(1)
 
 # load helper functions
-source("/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scRNA_reproduce/scripts/single_cell_rna_helper_functions.R")
+source("./hubmap_single_cell/scRNA_reproduce/scripts/single_cell_rna_helper_functions.R")
 
 # Define variables
 sample_name <- "all_samples"
-individual_qc_and_dublet_plot_location <- "/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scRNA_reproduce/all_cells/individual_qc/"
-analysis_parent_folder <- "/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scRNA_reproduce/all_cells/"
-setwd(analysis_parent_folder)
-
+individual_qc_and_dublet_plot_location <- "./hubmap_single_cell/scRNA_reproduce/all_cells/individual_qc/"
+analysis_parent_folder <- "./hubmap_single_cell/scRNA_reproduce/all_cells/"
 
 # set directory for individual processing
-setwd("/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scRNA_reproduce/initial_processing/")
+setwd("./hubmap_single_cell/scRNA_reproduce/initial_processing/")
 
 
 # Define sets and locations of files for initial processing
