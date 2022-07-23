@@ -60,10 +60,10 @@ multiome_sets <- list(c("B006-A-002", "B006-A-201", "B006-A-401", "B006-A-402","
 	c("Bei_CO2-4_B011-A-401", "Bei_CO2-5_B011-A-101","Bei_CO2-6_B011-A-201", "Bei_CO2-7_B011-A-405", "Bei_CO2-8_B011-A-501", "Bei_CO2-9_B012-A-001"))
 
 # load atac cells passing filters
-atac_cells <- read.table("/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scATAC/projects/initial_post_filter_atac_cells.txt")
+atac_cells <- read.table("./hubmap_single_cell/scATAC/projects/initial_post_filter_atac_cells.txt")
 
 # load immune cell types for these samples (from downstream analysis) if desired for examining how well ambient RNA removal is working
-celltypes <- read.table("/oak/stanford/groups/wjg/wbecker/other/hubmap_single_cell/scRNA/v1/immune/counts_norm_scale_harmony/immune_cell_types.tsv")
+celltypes <- read.table("./hubmap_single_cell/scRNA/v1/immune/counts_norm_scale_harmony/immune_cell_types.tsv")
 
 ##############################################################################################################################
 #............................................................................................................................#
