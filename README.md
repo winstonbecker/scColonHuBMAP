@@ -59,26 +59,15 @@ We subclusted the specialized secretory cells to further define populations that
 After initially annotating enteroendocrine cells in each compartment, we next annotated all enteroendocrine cells together to better identify subtypes of enteroendocrine cells. This is carried out in 3i_scRNA_enteroendocrine.R.  
 
 
-
-
-
-
-
-## Initial Clustering of scATAC data  
-
-Keep only the ATAC cells that we kept the corresponding RNA cells fror the multiome data. Then question is do we cluster everything together or do it seperately. If seperate then we can go ahead and do it, before we have the final list of multiome cells. 
-
-## Subclustering and annotation of scATAC data
+## Initial Clustering of snATAC data  
+For the multiome snATAC data, we now just assign the cell types defined from the rna data to the atac data. For the majority of anaylses, we next defined a peak set for all epithelial cells from all locations (see 6a_scATAC_run_archr_subset_epithelial_multiome.R). 
 
 ## Regulatory TF analysis
-We next aimed to identify regulatory TFs for each cell type in each region of the intestine, which is done in the script scATAC_5a_RegulatorsAllRegions.R.  
+We next aimed to identify regulatory TFs for each cell type in each region of the intestine, which is done in the script 6g_scATAC_RegulatorsAllRegions_multiome.  
 
-For the epithelial comparment, we first identified TF regulators individually for each major region of the intestine (duodenum, jejunum, ileum, and colon) as outlined in the [ArchR manual](https://www.archrproject.com/bookdown/identification-of-positive-tf-regulators.html). In this case, we correlated the Gene Expression Matix with the Vierstra Motif Matrix. TF regulators were selected as those with a correlation between these two matricies of 0.5 and a adjusted pvalue of the correlation of less than 0.01 and a motif delta above the 75th percentile. We then included TFs that were regulators in any of the four regions as the final list of TF regulators. We then plot the row z-scores of the Gene expression matrix for the corresponding TFs and the row z-scores of the chrom var deviation z-score for each TF. 
+For the epithelial comparment, we first identified TF regulators individually for each major region of the intestine (duodenum, jejunum, ileum, and colon) as outlined in the [ArchR manual](https://www.archrproject.com/bookdown/identification-of-positive-tf-regulators.html). In this case, we correlated the Gene Expression Matix with the Vierstra Motif Matrix. TF regulators were selected as those with a correlation between these two matricies of 0.5 and a adjusted pvalue of the correlation of less than 0.01 and a motif delta above the 75th percentile. We then included TFs that were regulators in any of the four regions as the final list of TF regulators. We then plot the row z-scores of the Gene expression matrix for the corresponding TFs and the row z-scores of the chrom var deviation z-score for each TF.  
 
-For the immune and stromal compartments, we identified TF regulators once for all sections rather than individually for each section.  
-
+For the immune and stromal compartments, we identified TF regulators once for all sections rather than individually for each section, as there were not as many cells for each group.  
 
 ## Trajectory analysis
-
-## LD score Regression
-
+For the trajectory analysis, we defined a rough trajectory spanning Stem cells to Enterocytes in each region of the intestine either by using the cell type labels as a backbone or clusters corresponding to the labels with less resolution. 
