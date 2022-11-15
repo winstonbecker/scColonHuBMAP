@@ -21,22 +21,7 @@ Where the peak around 250 UMIs/cell would represent counts in empty droplets and
 Next we simulated potential doublets for the non-multiome samples using [DoubletFinder](https://github.com/chris-mcginnis-ucsf/DoubletFinder) and removed predicted doublets from the datasets. This is carried out in 2_scRNA_analysis_per_sample_qc.R.   
 
 ## Ambient RNA Correction
-Based on the histograms of UMIs/droplet, we suspect that, like most droplet based scRNA datasets, there is some ambient RNA contamination in the dataset. Given that removing ambient RNA can be difficult, we approached this in multiple ways. As outlined above the first step was to simply remove cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets." Next we ran multiple ambient RNA detection methods, including [DecontX](https://github.com/campbio/celda) and [SoupX](https://github.com/constantAmateur/SoupX). For SoupX, we campared the results of using the automated contamination estimation for each individual sample and setting the contmination to 20%, 30%, and 40%.
-
-Example (B010-A-405) of soupX correction of MUC2 expression in immune cells (Corrected Raw counts are on the y-axis with raw counts on the x axis. The far left plot is the automated estimate of contamination and the other plots show 20%, 30%, and 40% contaminaiton, increasing from left to right. Points are colored by cell type):  
-<img src="https://user-images.githubusercontent.com/15204322/169681217-7b7232cf-917d-4d6e-970f-8172a524af29.png" width="235" height="200">
-<img src="https://user-images.githubusercontent.com/15204322/169681234-10c6ee2b-0a91-45fd-930f-f3a982fa8811.png" width="235" height="200">
-<img src="https://user-images.githubusercontent.com/15204322/169681246-543f5805-4cb8-4c5d-a708-772365262598.png" width="235" height="200">
-<img src="https://user-images.githubusercontent.com/15204322/169681249-b6868b28-341e-4478-8508-7832b1ff14e1.png" width="235" height="200">
-
-Reassuringly, even when setting the contamination fraction to 40%, known marker genes are not typically removed, as shown here for PAX5 at 40% contamination (red represents B cells and Pink represents Plasma cells).  
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/15204322/169681280-cc2193dd-6a9e-4b31-9848-41eb2b60aadc.png" width="300" height="250">
-</p> 
-
-Reassuringly, the clustering and annotation of the dataset was largely unaffected by ambient RNA removal.  
-
-Ultimately, we used the decontx corrected counts for downstream clustering and annotation of the dataset.  
+Based on the histograms of UMIs/droplet, we suspect that, like most droplet based scRNA datasets, there is some ambient RNA contamination in the dataset. Given that removing ambient RNA can be difficult, we approached this in multiple ways. As outlined above the first step was to simply remove cells without at least 3 times the number of UMIs as the median number of UMIs in "empty droplets." Next we corrected our RNA counts with the ambient RNA correction method [DecontX](https://github.com/campbio/celda).  
 
 
 ## Initial Clustering of scRNA data
